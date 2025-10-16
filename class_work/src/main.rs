@@ -1,50 +1,40 @@
-// fn append_region(word: &mut String){
-//     word.push_str("RGV");
-// }
-
-
-// fn main(){
-//     let mut x =  "UT".to_string();
-//     append_region(&mut x);
-//     println!("{}",x);
-// }
-
-fn concat_strings(s1: &String, s2: &String) -> String {
-    // Your code here
-    let mut new_word = String::new();
-    new_word.push_str(s1);
-    new_word.push_str(s2);
-    new_word
+#[derive(PartialEq,Debug)]
+enum Fruit {
+    Apple(String),
+    Banana(String),
+    Tomato(String),
 }
 
-fn clone_and_modify(s: &String) -> String {
-    // Your code here
-    let mut clone = s.clone();
-    clone.push_str("World!");
-    clone
+struct Inventory {
+    fruit: Vec<Fruit>,
 }
 
-fn sum(total: &mut i32, low: i32, high: i32) {
-    // Write your code here!
-    *total = 0;
-    for i in low..=high{
-        *total += i;
+impl Inventory {
+    fn available_fruits(&self) { 
+        for f in &self.fruit{
+            print!("{:?}: ",f);
+            Self::tell_me_joke(f);
+        }
+     }
+
+    fn tell_me_joke(fruit: &Fruit) { 
+        match fruit{
+             Fruit::Apple(msg) => println!("{}",msg),
+             Fruit::Banana(msg) => println!("{}",msg),
+             Fruit::Tomato(msg) => println!("{}",msg),
+        }
+
     }
 }
 
-fn main() {
-    let s1 = String::from("Hello, ");
-    let s2 = String::from("World!");
-    let result = concat_strings(&s1, &s2);
-    println!("{}", result); // Should print: "Hello, World!"
-
-
-    let s = String::from("Hello, ");
-    let modified = clone_and_modify(&s);
-    println!("Original: {}", s); // Should print: "Original: Hello, "
-    println!("Modified: {}", modified); // Should print: "Modified: Hello, World!"
-
-    let mut total = 0;
-    sum(&mut total,0,100);
-    println!("Result = {}", total);
+fn main(){
+    let a = "Why was the apple so grumpy? Because it was a crab apple.".to_string();
+    let b = "Why was the apple so grumpy? Because it was a crab apple".to_string();
+    let t = "Why did the tomato turn red? Because it saw the salad dressing!".to_string();
+    let fruits = vec![Fruit::Banana(b),Fruit::Apple(a),Fruit::Tomato(t)];
+    let grocery_store = Inventory {
+        fruit:fruits,
+    };
+   
+    grocery_store.available_fruits();
 }
